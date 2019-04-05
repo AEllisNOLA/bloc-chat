@@ -24,6 +24,7 @@ class App extends Component {
           <div className="four wide column">
             <RoomList firebase={firebase} />
           </div>
+          
           <div className="twelve wide column">
             <MessageList firebase={firebase} />
           </div>

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-
 class MessageList extends Component {
   constructor(props) {
     super(props);
@@ -29,8 +28,8 @@ class MessageList extends Component {
         <div className="ui comments">
           {this.state.messages.map(message => {
             return (
-              <div className="ui segment">
-                <div className="comment" key={message.key}>
+              <div className="ui segment" key={message.key}>
+                <div className="comment">
                   <div className="content">
                     <div className="author">{message.username}</div>
                     <div className="metadata">
