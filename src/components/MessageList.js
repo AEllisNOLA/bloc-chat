@@ -49,24 +49,6 @@ class MessageList extends Component {
     this.setState({ username: "", content: "", sentAt: "", roomId: "" });
   };
 
-  timeChange(epoch) {
-    // multiplied by 1000 so that the argument is in milliseconds, not seconds.
-    let date = new Date(epoch * 1000);
-   
-    // Hours part from the timestamp
-    let hours = date.getHours();
-    // Minutes part from the timestamp
-    let minutes = "0" + date.getMinutes();
-    // Seconds part from the timestamp
-    let seconds = "0" + date.getSeconds();
-
-    // Will display time in 10:30:23 format
-    let formattedTime =
-      hours + ":" + minutes.substr(-2) + ":" + seconds.substr(-2);
-
-    return formattedTime;
-  }
-
   render() {
     let messageBar = (
       <form className="ui form" onSubmit={this.createMessage}>
@@ -99,11 +81,6 @@ class MessageList extends Component {
             <div className="ui comment">
               <div className="content">
                 <h4>{message.username}</h4>
-                <div className="ui metadata">
-                  <span className="date">
-                    Sent at: {this.timeChange(message.sentAt)}
-                  </span>
-                </div>
                 <div className="text">
                   <p>{message.content}</p>
                 </div>
@@ -112,6 +89,7 @@ class MessageList extends Component {
           </div>
         );
       }
+      return null;
     });
 
     return (
