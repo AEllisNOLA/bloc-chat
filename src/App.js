@@ -17,16 +17,39 @@ var config = {
 firebase.initializeApp(config);
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeRoom: ""
+    };
+  }
+
+  setActiveRoom(room) {
+    this.setState({ activeRoom: room });
+    console.log(
+      `Clicked on ${this.state.activeRoom.name} with a key of ${
+        this.state.activeRoom.key
+      } `
+    );
+  }
+
   render() {
     return (
       <div className="App">
         <div className="ui grid">
           <div className="four wide column">
-            <RoomList firebase={firebase} />
+            <RoomList
+              firebase={firebase}
+              setActiveRoom={room => this.setActiveRoom(room)}
+              activeRoom={this.state.activeRoom}
+            />
           </div>
-          
+
           <div className="twelve wide column">
-            <MessageList firebase={firebase} />
+            <MessageList
+              firebase={firebase}
+              activeRoom={this.state.activeRoom}
+            />
           </div>
         </div>
       </div>

@@ -6,7 +6,8 @@ class RoomList extends Component {
 
     this.state = {
       rooms: [],
-      newRoomName: ""
+      newRoomName: "",
+      activeRoom: this.props.activeRoom
     };
 
     // connects to database path
@@ -19,7 +20,7 @@ class RoomList extends Component {
       const room = snapshot.val();
       room.key = snapshot.key;
       this.setState({ rooms: this.state.rooms.concat(room) });
-      console.log(this.state.rooms + " from RoomList component");
+      
     });
   }
 
@@ -46,6 +47,8 @@ class RoomList extends Component {
   }
 
   render() {
+
+   
     return (
       <div>
         <div className="ui segment">
@@ -59,8 +62,8 @@ class RoomList extends Component {
                 <input
                   type="text"
                   name="new-room"
-                  id="new-rooms"
-                  placeholder="Enter New Room Name"
+                  id="new-room"
+                  placeholder="Enter new room name..."
                   value={this.state.newRoomName}
                   onChange={e => this.handleChange(e)}
                 />
@@ -73,7 +76,7 @@ class RoomList extends Component {
           <div className="ui segments">
             {this.state.rooms.map(room => {
               return (
-                <div className="ui blue segment" key={room.key}>
+                <div className="ui blue segment" key={room.key} onClick={() => this.props.setActiveRoom(room)}>
                   {room.name}
                 </div>
               );

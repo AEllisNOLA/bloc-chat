@@ -5,7 +5,8 @@ class MessageList extends Component {
     super(props);
 
     this.state = {
-      messages: []
+      messages: [],
+      newMessage: ""
     };
 
     // connects to database path
@@ -18,30 +19,62 @@ class MessageList extends Component {
       const message = snapshot.val();
       message.key = snapshot.key;
       this.setState({ messages: this.state.messages.concat(message) });
-      console.log(this.state.messages + " from MessageList component");
     });
   }
 
+  handleChange(e) {
+    this.setState({ newMessage: e.target.value });
+  }
+
+  createMessage(e) {
+    e.preventDefault();
+
+    if (!this.state.newMessage) {
+      alert("Please enter a message");
+      return;
+    }
+
+    this.messagesRef.push({
+      username: "USERNAME",
+      content: this.state.newMessage,
+      sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
+      roomId: this.props.activeRoom.key
+    });
+
+    //clears field
+    this.setState({ newMessage: "" });
+  }
+
   render() {
+    let roomId = this.props.activeRoom.key;
+    let roomName = this.props.activeRoom.name;
+    console.log(roomId, roomName);
+
     return (
-      <div className="ui hidden divider">
-        <div className="ui comments">
-          {this.state.messages.map(message => {
-            return (
-              <div className="ui segment" key={message.key}>
-                <div className="comment">
-                  <div className="content">
-                    <div className="author">{message.username}</div>
-                    <div className="metadata">
-                      <span>{message.sentAt}</span>
-                    </div>
-                    <div className="text">{message.content}</div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+      <div>
+        <h2>Welcome to {roomName}</h2>
+
+        <form className="ui form" onSubmit={e => this.createMessage(e)}>
+          <div className="field">
+            <label htmlFor="new-message">Write Message:</label>
+            <input
+              type="text"
+              id="new-message"
+              name="new-message"
+              placeholder="Enter your message..."
+              value={this.state.newMessage}
+              onChange={e => this.handleChange(e)}
+            />
+            <button
+              className="ui blue button"
+              type="submit"
+              onSubmit={this.handleSubmit}
+            >
+              Send
+            </button>
+          </div>
+        </form>
+        <div />
       </div>
     );
   }
