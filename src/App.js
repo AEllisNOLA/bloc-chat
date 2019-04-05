@@ -24,13 +24,8 @@ class App extends Component {
     };
   }
 
-  setActiveRoom(room) {
+  setActiveRoom = (room) => {
     this.setState({ activeRoom: room });
-    console.log(
-      `Clicked on ${this.state.activeRoom.name} with a key of ${
-        this.state.activeRoom.key
-      } `
-    );
   }
 
   render() {
@@ -45,10 +40,10 @@ class App extends Component {
             />
           </div>
 
-          <div className="twelve wide column">
+          <div className="eleven wide column">
             <MessageList
               firebase={firebase}
-              activeRoom={this.state.activeRoom}
+              activeRoom={this.state.activeRoom.key}
             />
           </div>
         </div>
