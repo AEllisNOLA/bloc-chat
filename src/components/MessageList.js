@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import moment from 'moment';
 
 class MessageList extends Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class MessageList extends Component {
   handleChange = e => {
     e.preventDefault();
     this.setState({
-      username: "USERNAME",
+      username: this.props.user ? this.props.user.displayName : "Guest",
       content: e.target.value,
       sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
       roomId: this.props.activeRoom
@@ -39,7 +40,7 @@ class MessageList extends Component {
     e.preventDefault();
 
     this.messagesRef.push({
-      username: this.state.username,
+      username: this.props.user ? this.props.user.displayName : "Guest",
       content: this.state.content,
       sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
       roomId: this.state.roomId
@@ -50,6 +51,8 @@ class MessageList extends Component {
   };
 
   render() {
+    
+    
     let messageBar = (
       <form className="ui form" onSubmit={this.createMessage}>
         <div className="field">
@@ -81,6 +84,8 @@ class MessageList extends Component {
             <div className="ui comment">
               <div className="content">
                 <h4>{message.username}</h4>
+
+                <p>{moment(message.sentAt).calendar()}</p>
                 <div className="text">
                   <p>{message.content}</p>
                 </div>
