@@ -9,12 +9,10 @@ class RoomList extends Component {
       newRoomName: ""
     };
 
-    // connects to database path
     this.roomsRef = this.props.firebase.database().ref("rooms");
   }
 
   componentDidMount() {
-    // gives access to database data and metadata
     this.roomsRef.on("child_added", snapshot => {
       const room = snapshot.val();
       room.key = snapshot.key;
@@ -25,18 +23,15 @@ class RoomList extends Component {
   createRoom(e) {
     e.preventDefault();
 
-    // Avoids creating new chat room without a name
     if (!this.state.newRoomName) {
       alert("Please enter a room name");
       return;
     }
 
-    // Creates room
     this.roomsRef.push({
       name: this.state.newRoomName
     });
 
-    //clears field
     this.setState({ newRoomName: "" });
   }
 
@@ -74,6 +69,11 @@ class RoomList extends Component {
       <div>
         <div className="ui segment">
           <h2>Room List</h2>
+
+          
+          <h3>
+            {this.props.activeRoom ? `Current Room: ${this.props.activeRoom.name}` : "Select Room"}
+          </h3>
         </div>
         <div className="ui hidden divider">
           <div className="ui segments">

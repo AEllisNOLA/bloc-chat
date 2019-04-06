@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import * as firebase from "firebase";
 import "./App.css";
+
 import RoomList from "./components/RoomList";
 import MessageList from "./components/MessageList";
 import User from "./components/User";
@@ -35,7 +36,6 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <div className="App">
         <User
@@ -51,7 +51,6 @@ class App extends Component {
               activeRoom={this.state.activeRoom}
             />
           </div>
-
           <div className="eleven wide column">
             <MessageList
               firebase={firebase}

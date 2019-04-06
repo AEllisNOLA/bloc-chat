@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import moment from 'moment';
+import moment from "moment";
 
 class MessageList extends Component {
   constructor(props) {
@@ -13,12 +13,10 @@ class MessageList extends Component {
       roomId: ""
     };
 
-    // connects to database path
     this.messagesRef = this.props.firebase.database().ref("messages");
   }
 
   componentDidMount() {
-    // gives access to database data and metadata
     this.messagesRef.on("child_added", snapshot => {
       const message = snapshot.val();
       message.key = snapshot.key;
@@ -46,13 +44,10 @@ class MessageList extends Component {
       roomId: this.state.roomId
     });
 
-    //clears field
     this.setState({ username: "", content: "", sentAt: "", roomId: "" });
   };
 
   render() {
-    
-    
     let messageBar = (
       <form className="ui form" onSubmit={this.createMessage}>
         <div className="field">
